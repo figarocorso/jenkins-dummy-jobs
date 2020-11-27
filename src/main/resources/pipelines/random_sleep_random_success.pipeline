@@ -1,0 +1,30 @@
+pipeline {
+    agent any
+    stages {
+    	stage ('Script') {
+    	    steps {
+        	    script {
+                    def status = sh(returnStatus: true, script: '''#!/bin/bash
+                        set -x
+                        SLEEP_SECONDS=$((1 + RANDOM % 50))
+                        sleep ${SLEEP_SECONDS}
+                        echo "We have just waited for ${SLEEP_SECONDS} seconds"
+                        echo "cow!"
+                        RANDOM_STATUS=$((RANDOM % 3))
+                        echo "Now exiting with random status code: ${RANDOM_STATUS}"
+                        exit ${RANDOM_STATUS}
+                        '''
+                    )
+                    if (status == 0) {
+                        currentBuild.result = 'SUCCESS'
+                    } else if (status == 1) {
+                        currentBuild.result = 'UNSTABLE'
+                    } else {
+                        currentBuild.result = 'FAILURE'
+                    }
+
+        	    }
+    	    }
+    	}
+    }
+}
