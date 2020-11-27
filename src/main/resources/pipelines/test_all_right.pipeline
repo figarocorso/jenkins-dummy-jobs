@@ -16,14 +16,14 @@ pipeline {
                     withPythonEnv('python') {
                         sh '''
                             pip install nose
-                            nosetests --with-xunit --xunit-file allright-results.xml --xunit-testsuite-name=allright test_all_right
+                            nosetests --with-xunit --xunit-file all_right_results.xml --xunit-testsuite-name=all_right test_all_right
                         '''
                     }
                 }
             }
             post {
                 always {
-                    junit allowEmptyResults: true, testResults: 'all_right-results.xml'
+                    junit allowEmptyResults: true, testResults: 'all_right_results.xml'
                 }
             }
         }
