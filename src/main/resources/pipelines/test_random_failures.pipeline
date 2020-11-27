@@ -14,14 +14,14 @@ pipeline {
                             git clean -f -x
                             cd tests
                             pip install nose
-                            nosetests --with-xunit --xunit-file all_right_results.xml --xunit-testsuite-name=all_right test_all_right
+                            nosetests --with-xunit --xunit-file random_failures_results.xml --xunit-testsuite-name=random_failures test_random_failures
                         '''
                     }
                 }
             }
             post {
                 always {
-                    junit allowEmptyResults: true, testResults: 'tests/all_right_results.xml'
+                    junit allowEmptyResults: true, testResults: 'tests/random_failures_results.xml'
                 }
             }
         }
