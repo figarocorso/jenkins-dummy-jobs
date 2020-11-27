@@ -1,0 +1,31 @@
+pipeline {
+    agent any
+    stages {
+        stage('Checkout') {
+            steps {
+                checkout changelog: false, poll: false, scm: [$class: 'GitSCM', branches: [[name: '*/main']], doGenerateSubmoduleConfigurations: false, extensions: [], submoduleCfg: [], userRemoteConfigs: [[url: 'https://github.com/figarocorso/jenkins-dummy-jobs']]]
+            }
+        }
+        stage ('Tests') {
+            steps {
+                script {
+                    sh '''
+                        cd tests
+                        git checkout -- .
+                    '''
+                    withPythonEnv('python') {
+                        sh '''
+                            pip install nose
+                            nosetests --with-xunit --xunit-file allright-results.xml --xunit-testsuite-name=allright test_all_right
+                        '''
+                    }
+                }
+            }
+            post {
+                always {
+                    junit allowEmptyResults: true, testResults: 'all_right-results.xml'
+                }
+            }
+        }
+    }
+}
