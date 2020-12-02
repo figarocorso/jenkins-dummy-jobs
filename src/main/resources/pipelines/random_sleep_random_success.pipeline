@@ -6,7 +6,7 @@ pipeline {
         	    script {
                     def status = sh(returnStatus: true, script: '''#!/bin/bash
                         set -x
-                        SLEEP_SECONDS=$((1 + RANDOM % 50))
+                        SLEEP_SECONDS=$((1 + RANDOM % 20))
                         sleep ${SLEEP_SECONDS}
                         echo "We have just waited for ${SLEEP_SECONDS} seconds"
                         echo "cow!"
