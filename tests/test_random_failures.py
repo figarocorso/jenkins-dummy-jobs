@@ -40,6 +40,18 @@ class RandomFailures(unittest.TestCase):
     def test_10_fail_one_out_of_three(self):
         self.assertEqual(1, randint(1, 3))
 
+    def test_11(self):
+        self._assert_with_stable_condition()
+
+    def test_12(self):
+        self._assert_with_stable_condition()
+
+    def test_13(self):
+        self._assert_with_stable_condition()
+
+    def test_14(self):
+        self._assert_with_stable_condition()
+
     def _assert_with_stable_condition(self):
         self.assertEqual(1, 1 if self.stable else randint(1, 3))
 
