@@ -1,6 +1,6 @@
 job = pipelineJob("Random-sleep-Random-success")
 job.with {
-    description('Execute every minute. Wait for some random 1..10 seconds and success, unstable or fail randomly')
+    description('Execute every 10 minutes. Wait for some random 1..20 seconds and success, unstable or fail randomly')
     logRotator {
         daysToKeep(100)
         numToKeep(100)
@@ -9,7 +9,7 @@ job.with {
     pipelineTriggers {
         triggers {
             cron {
-                spec("*/1 * * * *")
+                spec("*/10 * * * *")
             }
         }
     }
